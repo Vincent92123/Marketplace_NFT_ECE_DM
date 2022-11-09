@@ -3,7 +3,6 @@ import { ethers } from "ethers"
 import { Row, Form, Button } from 'react-bootstrap'
 import { Buffer } from 'buffer';
 import { create as ipfsHttpClient } from 'ipfs-http-client'
-//const auth = `Basic ${Buffer.from(`${process.env.PROJECT_ID}:${process.env.PROJECT_SECRET}`).toString('base64')}`;
 const auth = `Basic ` + Buffer.from(`2HHvP56MD01LQkNZornTEJ58ZrT:e10d6dfef058dd1001814f2bba44340c`).toString(`base64`);
 const options = {
   host: 'ipfs.infura.io',

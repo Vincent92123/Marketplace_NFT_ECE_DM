@@ -8,9 +8,8 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "hardhat/console.sol";
 
 contract Marketplace is ReentrancyGuard {
-    // State variables
-    address payable public immutable feeAccount; // the account that receives fees
-    uint256 public immutable feePercent; // the fee percentage on sales
+    address payable public immutable feeAccount;
+    uint256 public immutable feePercent;
     uint256 public itemCount;
 
     struct Item {
@@ -22,7 +21,6 @@ contract Marketplace is ReentrancyGuard {
         bool sold;
     }
 
-    // itemId -> Item
     mapping(uint256 => Item) public items;
 
     event Offered(
@@ -47,18 +45,18 @@ contract Marketplace is ReentrancyGuard {
         feePercent = _feePercent;
     }
 
-    // Make item to offer on the marketplace
+    // Création d'items à mettre sur la marketplace
     function makeItem(
         IERC721 _nft,
         uint256 _tokenId,
         uint256 _price
     ) external nonReentrant {
         require(_price > 0, "Price must be greater than zero");
-        // increment itemCount
+        // on incrémente le nombre d'items
         itemCount++;
-        // transfer nft
+        // on transfère le nft
         _nft.transferFrom(msg.sender, address(this), _tokenId);
-        // add new item to items mapping
+        // on ajoute le nouvel item au mappings d'items pré existant
         items[itemCount] = Item(
             itemCount,
             _nft,
@@ -67,7 +65,7 @@ contract Marketplace is ReentrancyGuard {
             payable(msg.sender),
             false
         );
-        // emit Offered event
+        // on "emit" un acte d'offre correspondant au nouvel item
         emit Offered(itemCount, address(_nft), _tokenId, _price, msg.sender);
     }
 
@@ -80,14 +78,14 @@ contract Marketplace is ReentrancyGuard {
             "not enough ether to cover item price and market fee"
         );
         require(!item.sold, "item already sold");
-        // pay seller and feeAccount
+        // on paye le vendeur et le feeAccount
         item.seller.transfer(item.price);
         feeAccount.transfer(_totalPrice - item.price);
-        // update item to sold
+        // on actualise l'item comme étant vendu
         item.sold = true;
-        // transfer nft to buyer
+        // on transfère le nft à l'acheteur
         item.nft.transferFrom(address(this), msg.sender, item.tokenId);
-        // emit Bought event
+        // on "emit" un acte de vente
         emit Bought(
             _itemId,
             address(item.nft),
