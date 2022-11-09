@@ -5,9 +5,9 @@ import {
 } from "react-router-dom";
 import Navigation from './Navbar';
 import Home from './Home.js'
-//import Create from './Create.js'
-//import MyListedItems from './MyListedItems.js'
-//import MyPurchases from './MyPurchases.js'
+import Create from './Create.js'
+import MyListedItems from './MyListedItems.js'
+import MyPurchases from './MyPurchases.js'
 import MarketplaceAbi from '../contractsData/Marketplace.json'
 import MarketplaceAddress from '../contractsData/Marketplace-address.json'
 import NFTAbi from '../contractsData/NFT.json'
@@ -68,6 +68,15 @@ function App() {
                             <Route path="/" element={
                                 <Home marketplace={marketplace} nft={nft} />
                             } />
+                            <Route path="/create" element={
+                                <Create marketplace={marketplace} nft={nft} />
+                            } />
+                            <Route path="/my-listed-items" element={
+                                <MyListedItems marketplace={marketplace} nft={nft} account={account} />
+                            } />
+                            <Route path="/my-purchases" element={
+                                <MyPurchases marketplace={marketplace} nft={nft} account={account} />
+                            } />
                         </Routes>
                     )}
                 </div>
@@ -78,21 +87,3 @@ function App() {
 }
 
 export default App;
-
-                            //<Route path="/create" element={
-                            //    <Create marketplace={marketplace} nft={nft} />
-                            //} />
-                            //<Route path="/my-listed-items" element={
-                            //    <MyListedItems marketplace={marketplace} nft={nft} account={account} />
-                            //} />
-                            //<Route path="/my-purchases" element={
-                            //    <MyPurchases marketplace={marketplace} nft={nft} account={account} />
-                            //} /><Route path="/create" element={
-                            //    <Create marketplace={marketplace} nft={nft} />
-                            //} />
-                            //<Route path="/my-listed-items" element={
-                            //    <MyListedItems marketplace={marketplace} nft={nft} account={account} />
-                            //} />
-                            //<Route path="/my-purchases" element={
-                            //    <MyPurchases marketplace={marketplace} nft={nft} account={account} />
-                            //} />    
